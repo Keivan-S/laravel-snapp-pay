@@ -6,8 +6,6 @@ use BackendProgramer\SnappPay\Abstracts\SnappPay as AbstractsSnappPay;
 use BackendProgramer\SnappPay\enums\Currency;
 use BackendProgramer\SnappPay\enums\EPType;
 use BackendProgramer\SnappPay\Order\Order;
-use JetBrains\PhpStorm\ArrayShape;
-
 class SnappPay extends AbstractsSnappPay
 {
     use Traits\OrderSettings;
@@ -17,7 +15,6 @@ class SnappPay extends AbstractsSnappPay
      *
      * @return string[]
      */
-    #[ArrayShape(['Authorization' => 'string', 'Content-Type' => 'string'])]
     public function getRequestBasicToken(): array
     {
         $token = 'Authorization: Basic ' . base64_encode($this->setting->getClientId() . ':' . str_replace('amp;', '', $this->setting->getClientSecret()));

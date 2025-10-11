@@ -2,19 +2,37 @@
 
 namespace BackendProgramer\SnappPay;
 
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class SnappPayServiceProvider extends PackageServiceProvider
+class SnappPayServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot(): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         */
-        $package
-            ->name('snapp-pay')
-            ->hasConfigFile();
+        $configPath = __DIR__ . '/../config/snapp-pay.php';
+        $targetPath = function_exists('config_path')
+            ? config_path('snapp-pay.php')
+            : $this->app->basePath('config/snapp-pay.php');
+
+        $this->publishes([
+            $configPath => $targetPath,
+        ], 'snapp-pay-config');
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/snapp-pay.php',
+            'snapp-pay'
+        );
     }
 }

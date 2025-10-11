@@ -4,8 +4,6 @@ namespace BackendProgramer\SnappPay\Order;
 
 use BackendProgramer\SnappPay\Abstracts\Order as AbstractsOrder;
 use BackendProgramer\SnappPay\Cart\CartList;
-use JetBrains\PhpStorm\ArrayShape;
-
 class Order extends AbstractsOrder
 {
     /**
@@ -13,7 +11,6 @@ class Order extends AbstractsOrder
      *
      * @return array
      */
-    #[ArrayShape(['cartId' => 'int', 'totalAmount' => 'int', 'shippingAmount' => 'int', 'isShipmentIncluded' => 'bool', 'taxAmount' => 'int', 'isTaxIncluded' => 'bool', 'cartItems' => 'array'])]
     public function buildCartList(): array
     {
         $cartList = new CartList($this);

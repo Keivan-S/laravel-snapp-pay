@@ -3,8 +3,6 @@
 namespace BackendProgramer\SnappPay\Cart;
 
 use BackendProgramer\SnappPay\Order\ProductCategory;
-use JetBrains\PhpStorm\Pure;
-
 class CartItem
 {
     /**
@@ -58,7 +56,6 @@ class CartItem
      * @param int             $amount
      * @param ProductCategory $productCategory
      */
-    #[Pure]
     public function __construct(int $id, string $name, int $count, int $amount, ProductCategory $productCategory)
     {
         $this->id = $id;

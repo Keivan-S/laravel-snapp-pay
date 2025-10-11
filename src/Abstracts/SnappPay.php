@@ -8,8 +8,6 @@ use BackendProgramer\SnappPay\SnappPayEndpoint;
 use BackendProgramer\SnappPay\SnappPaySetting;
 use BackendProgramer\SnappPay\Traits\EndpointSettings;
 use BackendProgramer\SnappPay\Traits\OrderSettings;
-use JetBrains\PhpStorm\Pure;
-
 abstract class SnappPay implements SnappPayInterface
 {
     use OrderSettings;
@@ -62,7 +60,6 @@ abstract class SnappPay implements SnappPayInterface
      *
      * @return string
      */
-    #[Pure]
     public function getApiBaseUrl(): string
     {
         return $this->urlSlashCheck($this->setting->getBaseUrl(), true) . '/';
@@ -166,7 +163,7 @@ abstract class SnappPay implements SnappPayInterface
      *
      * @return array
      */
-    protected function processResponse(array|string $response, array $requestArgs = [], string $requestUrl = ''): array
+    protected function processResponse($response, array $requestArgs = [], string $requestUrl = ''): array
     {
         if ($this->snappPayIsJson($response)) {
             $response = json_decode($response, true);
@@ -259,7 +256,7 @@ abstract class SnappPay implements SnappPayInterface
      *
      * @return array|string
      */
-    protected function curlExecute(string $url, array $request): array|string
+    protected function curlExecute(string $url, array $request)
     {
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -345,13 +342,19 @@ abstract class SnappPay implements SnappPayInterface
      */
     protected function getResponseCode(int $errorCode): int
     {
-        return match ($errorCode) {
-            1000 => 500,
-            1003, 1013 => 401,
-            1008 => 409,
-            1011 => 400,
-            default => 200,
-        };
+        switch ($errorCode) {
+            case 1000:
+                return 500;
+            case 1003:
+            case 1013:
+                return 401;
+            case 1008:
+                return 409;
+            case 1011:
+                return 400;
+            default:
+                return 200;
+        }
     }
 
     /**
@@ -361,7 +364,7 @@ abstract class SnappPay implements SnappPayInterface
      *
      * @return bool
      */
-    protected function snappPayIsJson(array|string $string): bool
+    protected function snappPayIsJson($string): bool
     {
         return !is_array($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE);
     }
