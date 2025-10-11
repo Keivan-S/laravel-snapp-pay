@@ -9,35 +9,35 @@ class SnappPaySetting
      *
      * @var string username
      */
-    protected string $username;
+    protected string $username = '';
 
     /**
      * Password of the snapppay.
      *
      * @var string password
      */
-    protected string $password;
+    protected string $password = '';
 
     /**
      * Client ID of the snapppay.
      *
      * @var string clientId
      */
-    protected string $clientId;
+    protected string $clientId = '';
 
     /**
      * Client Secret of the snapppay.
      *
      * @var string clientSecret
      */
-    protected string $clientSecret;
+    protected string $clientSecret = '';
 
     /**
      * Base url of the snapppay api.
      *
      * @var string baseUrl
      */
-    protected string $baseUrl;
+    protected string $baseUrl = '';
 
     /**
      * Setting constructor.
@@ -185,6 +185,6 @@ class SnappPaySetting
      */
     public function getBaseUrl(): string
     {
-        return str_ends_with($this->baseUrl, '/') ? $this->baseUrl : $this->baseUrl.'/';
+        return (strlen($this->baseUrl) > 0 && substr($this->baseUrl, -1) === '/') ? $this->baseUrl : $this->baseUrl.'/';
     }
 }

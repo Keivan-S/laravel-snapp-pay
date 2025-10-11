@@ -15,10 +15,10 @@ trait EndpointSettings
      */
     public function urlSlashCheck(string $url, bool $removeFromEnd = true, bool $removeFromStart = true): string
     {
-        if ($removeFromEnd && str_ends_with($url, '/')) {
+        if ($removeFromEnd && strlen($url) > 0 && substr($url, -1) === '/') {
             $url = substr($url, 0, strlen($url) - 1);
         }
-        if ($removeFromStart && str_starts_with($url, '/')) {
+        if ($removeFromStart && strlen($url) > 0 && substr($url, 0, 1) === '/') {
             $url = substr($url, 1);
         }
 

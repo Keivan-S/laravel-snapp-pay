@@ -4,9 +4,6 @@ namespace BackendProgramer\SnappPay\Cart;
 
 use BackendProgramer\SnappPay\Abstracts\CartList as AbstractsCartList;
 use BackendProgramer\SnappPay\enums\Currency;
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
 class CartList extends AbstractsCartList
 {
     /**
@@ -14,7 +11,6 @@ class CartList extends AbstractsCartList
      *
      * @return array
      */
-    #[Pure] #[ArrayShape(['cartId' => 'int', 'totalAmount' => 'int', 'shippingAmount' => 'int', 'isShipmentIncluded' => 'bool', 'taxAmount' => 'int', 'isTaxIncluded' => 'bool', 'cartItems' => 'array'])]
     public function toArray(): array
     {
         $cartList = [

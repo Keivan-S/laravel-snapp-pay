@@ -53,10 +53,10 @@ trait OrderSettings
         if (preg_match("@^\+980@", $mobile) && strlen($mobile) == 14) {
             return '+98'.substr($mobile, 4);
         }
-        if (str_starts_with($mobile, '09') && strlen($mobile) == 11) {
+        if (substr($mobile, 0, 2) === '09' && strlen($mobile) == 11) {
             return '+98'.substr($mobile, 1);
         }
-        if (str_starts_with($mobile, '9') && strlen($mobile) == 10) {
+        if (substr($mobile, 0, 1) === '9' && strlen($mobile) == 10) {
             return '+98'.$mobile;
         }
 
