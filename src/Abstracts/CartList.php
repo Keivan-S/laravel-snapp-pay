@@ -78,9 +78,9 @@ abstract class CartList implements CartListInterface
         $this->cartId = $order->getId();
         $this->totalAmount = $order->getTotalPrice();
         $this->shippingAmount = $order->getShippingAmount();
-        $this->isShipmentIncluded = $order->getShippingAmount() > 0;
+        $this->isShipmentIncluded = $order->getShippingAmount() > 0 || $order->getShippingIncluded();
         $this->taxAmount = $order->getTaxAmount();
-        $this->isTaxIncluded = $order->getTaxAmount() >= 0;
+        $this->isTaxIncluded = $order->getTaxAmount() >= 0 || $order->getTaxIncluded();
         $this->currency = $order->getOrderCurrency();
 
         foreach ($order->getOrderProducts() as $product) {
@@ -255,4 +255,5 @@ abstract class CartList implements CartListInterface
      * @return array
      */
     abstract public function toArray(): array;
+
 }

@@ -13,6 +13,19 @@ abstract class Order implements OrderInterface
      * @var int id
      */
     protected int $id;
+    /**
+     * Order tax included.
+     *
+     * @var bool shippingIncluded
+     */
+    protected bool $shippingIncluded;
+
+    /**
+     * Order tax included.
+     *
+     * @var bool taxIncluded
+     */
+    protected bool $taxIncluded;
 
     /**
      * Order price without discount.
@@ -81,8 +94,10 @@ abstract class Order implements OrderInterface
      * @param string $orderCurrency
      * @param string $userMobile
      * @param string $paymentToken
+     * @param bool   $shippingIncluded
+     * @param bool   $taxIncluded
      */
-    public function __construct(int $id, int $price, int $totalPrice, int $shippingAmount, int $taxAmount, string $orderCurrency, string $userMobile, string $paymentToken = '')
+    public function __construct(int $id, int $price, int $totalPrice, int $shippingAmount, int $taxAmount, string $orderCurrency, string $userMobile, string $paymentToken = '', bool $shippingIncluded = false, bool $taxIncluded = false)
     {
         $this->orderProducts = [];
         $this->id = $id;
@@ -93,6 +108,8 @@ abstract class Order implements OrderInterface
         $this->orderCurrency = $orderCurrency;
         $this->userMobile = $userMobile;
         $this->paymentToken = $paymentToken;
+        $this->shippingIncluded = $shippingIncluded;
+        $this->taxIncluded = $taxIncluded;
     }
 
     /**
@@ -116,6 +133,53 @@ abstract class Order implements OrderInterface
             $this->totalPrice += ($product->getPrice() * $product->getQty());
         }
     }
+
+    /**
+     * Set order shipping included.
+     *
+     * @param bool $shippingIncluded
+     *
+     * @return void
+     */
+    public function setShippingIncluded(bool $shippingIncluded): void
+    {
+        $this->shippingIncluded = $shippingIncluded;
+    }
+
+    /**
+     * Retrieve order shipping included.
+     *
+     * @return bool
+     */
+    public function getShippingIncluded(): bool
+    {
+        return $this->shippingIncluded;
+    }
+
+    /**
+     * Set order tax included.
+     *
+     * @param bool $taxIncluded
+     *
+     * @return void
+     *
+     */
+    public function setTaxIncluded(bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
+    }
+
+    /**
+     * Retrieve order tax included.
+     *
+     * @return bool
+     *
+     */
+    public function getTaxIncluded(): bool
+    {
+        return $this->taxIncluded;
+    }
+
 
     /**
      * Remove order products.
@@ -347,4 +411,5 @@ abstract class Order implements OrderInterface
     {
         return $this->paymentToken != '' ? $this->paymentToken : null;
     }
+
 }
