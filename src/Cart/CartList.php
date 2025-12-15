@@ -19,10 +19,10 @@ class CartList extends AbstractsCartList
             'isShipmentIncluded' => $this->isShipmentIncluded,
             'isTaxIncluded' => $this->isTaxIncluded,
         ];
-        if (!$this->isShipmentIncluded) {
+        if (!$this->isShipmentIncluded && $this->shippingAmount > 0) {
             $cartList['shippingAmount'] = self::convertPrice($this->shippingAmount, $this->currency, Currency::RIAL);
         }
-        if ($this->isTaxIncluded) {
+        if (!$this->isTaxIncluded && $this->taxAmount > 0) {
             $cartList['taxAmount'] = self::convertPrice($this->taxAmount, $this->currency, Currency::RIAL);
         }
         foreach ($this->cartItems as $cartItem) {
