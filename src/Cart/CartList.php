@@ -18,15 +18,11 @@ class CartList extends AbstractsCartList
             'totalAmount' => self::convertPrice($this->totalAmount, $this->currency, Currency::RIAL),
             'isShipmentIncluded' => $this->isShipmentIncluded,
             'isTaxIncluded' => $this->isTaxIncluded,
+            'shippingAmount' => self::convertPrice($this->shippingAmount, $this->currency, Currency::RIAL),
+            'taxAmount' => self::convertPrice($this->taxAmount, $this->currency, Currency::RIAL)
+
         ];
-        if (!$this->isShipmentIncluded && $this->shippingAmount > 0) {
-            \Log::channel('snappay')->info('Set tax ', ['isship' => $this->isShipmentIncluded, 'ship' => $this->shippingAmount]);
-            $cartList['shippingAmount'] = self::convertPrice($this->shippingAmount, $this->currency, Currency::RIAL);
-        }
-        if (!$this->isTaxIncluded && $this->taxAmount > 0) {
-            \Log::channel('snappay')->info('Set tax ', ['isTax' => $this->isTaxIncluded, 'tax' => $this->taxAmount]);
-            $cartList['taxAmount'] = self::convertPrice($this->taxAmount, $this->currency, Currency::RIAL);
-        }
+
         foreach ($this->cartItems as $cartItem) {
             $items[] = [
                 'id' => $cartItem->getId(),
