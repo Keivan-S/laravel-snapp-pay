@@ -35,6 +35,11 @@ abstract class SnappPay implements SnappPayInterface
     protected static array $expiredValue = [];
 
     /**
+     * Default timeout (seconds) for SnappPay HTTP calls.
+     */
+    protected int $timeoutSeconds = 60;
+
+    /**
      * Class constructor.
      *
      * @param SnappPaySetting|null  $setting
@@ -265,7 +270,7 @@ abstract class SnappPay implements SnappPayInterface
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_CONNECTTIMEOUT => 30,
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_TIMEOUT => $this->timeoutSeconds,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $request['method'],
