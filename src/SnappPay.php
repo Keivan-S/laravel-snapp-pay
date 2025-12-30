@@ -48,8 +48,13 @@ class SnappPay extends AbstractsSnappPay
             if (isset($response['status']) && $response['status'] == 'error') {
                 return ['status' => 'error', 'code' => 401, 'message' => 'خطای دریافت توکن'];
             }
+            \Log::info('snapp barer',$response);
+            if (!is_array($response) || !isset($response['access_token'], $response['expires_in'])) {
+                $message = $response['message'] ?? $response['error_description'] ?? 'SnappPay bearer token response missing access_token.';
+                return ['status' => 'error', 'code' => 401, 'message' => $message];
+            }
             $bearer_token = $response['access_token'];
-            $ttl = $response['expires_in'] + time();
+            $ttl = (int) $response['expires_in'] + time();
             $this->setExpiredValue('snapppay_bearer_token', $bearer_token, $ttl);
         }
 

@@ -229,6 +229,16 @@ abstract class SnappPay implements SnappPayInterface
             $headers = $this->getRequestBasicToken();
         } else {
             $headers = $this->getRequestBearerToken();
+            if (isset($headers['status']) && $headers['status'] === 'error') {
+                return [
+                    'status' => 'error',
+                    'successful' => false,
+                    'statusCode' => $headers['code'] ?? 401,
+                    'message' => $headers['message'] ?? 'Unable to get bearer token.',
+                    'url' => $url,
+                    'args' => $args,
+                ];
+            }
         }
         $request = [
             'method' => $method,
